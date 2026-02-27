@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCMS.IO - Elite Online Learning Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #020617;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --secondary: #8b5cf6;
+            --secondary-glow: rgba(139, 92, 246, 0.5);
+            --accent: #10b981;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --nav-bg: rgba(2, 6, 23, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 40%);
+        }
+
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(59, 130, 246, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--text-dim) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .nav-links .auth-btn {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            color: #fff;
+        }
+
+        .nav-links .auth-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 6rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: var(--primary-glow);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto 3.5rem;
+            line-height: 1.6;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1.1rem 2.8rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 12px 24px -8px var(--primary-glow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 20px 40px -12px var(--primary-glow);
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            color: white;
+            padding: 1.1rem 2.8rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--text-dim);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Grid */
+        .stats-section {
+            padding: 4rem 0 8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 3rem 2rem;
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            transition: background 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.4);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .stat-card:hover::before {
+            background: var(--primary);
+        }
+
+        .stat-card h3 {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card .value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        /* Trusted By */
+        .trusted-by {
+            text-align: center;
+            margin-top: 4rem;
+            opacity: 0.6;
+        }
+
+        .trusted-by p {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+        }
+
+        .logo-cloud {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            filter: grayscale(1);
+            flex-wrap: wrap;
+        }
+
+        .logo-cloud span {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        /* Domain Explorer (Categories) */
+        .domain-explorer {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .category-chip {
+            padding: 0.6rem 1.4rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .category-chip:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px var(--primary-glow);
+        }
+
+        /* Curated Course Grid */
+        .section-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        .curated-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 8rem;
+        }
+
+        .preview-card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.4);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .card-preview-img {
+            height: 180px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .price-badge {
+            position: absolute;
+            bottom: 1rem;
+            right: 1.5rem;
+            background: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .card-content {
+            padding: 1.75rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .card-content p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            line-clamp: 2;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* OCMS Edge Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 10rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--secondary-glow);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+            }
+
+            .stat-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .stat-card .value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">OCMS.IO</a>
+            <div class="nav-links" id="navLinks">
+                <a href="/courses/">Courses</a>
+                <a href="/dashboard/" id="dashboardLink" style="display: none;">Analytics</a>
+                <a href="/login/" id="loginLink">Sign In</a>
+                <a href="/register/" id="registerLink" class="auth-btn">Join Library</a>
+                <a href="/profile/" id="profileLink" style="display: none;">My Profile</a>
+                <a href="#" id="logoutLink" style="display: none; color: #ef4444;">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>Unlock Your <span>Potential</span> with Elite Courses</h1>
+                <p>Join over 12,000+ students mastering field-leading skills through our high-performance curriculum and
+                    expert instruction.</p>
+
+                <div class="hero-btns">
+                    <a href="/courses/" class="btn-primary">Explore Courses</a>
+                    <a href="/dashboard/" class="btn-secondary" id="analyticsBtn">View Impact</a>
+                </div>
+
+                <div class="trusted-by">
+                    <p>Powering learners at world-level teams</p>
+                    <div class="logo-cloud">
+                        <span>TECHCORP</span>
+                        <span>GLOBEX</span>
+                        <span>ULTRAFLOW</span>
+                        <span>VERTEX</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stats-section">
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <h3>Learners Globally</h3>
+                        <div class="value" id="totalUsers">24k+</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Courses</h3>
+                        <div class="value" id="totalCourses">450+</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Knowledge Hours</h3>
+                        <div class="value" id="totalEnrollments" style="color: var(--primary);">98%</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="domain-explorer" id="categoryList">
+                <!-- Categories loaded here -->
+            </div>
+
+            <section class="curated-intelligence">
+                <div class="section-header">
+                    <h2>Curated <span>Intelligence</span></h2>
+                    <p>Recent high-performance course inclusions to the OCMS database.</p>
+                </div>
+                <div class="curated-grid" id="featuredCourses">
+                    <!-- Courses loaded here -->
+                </div>
+            </section>
+
+            <section class="ocms-edge">
+                <div class="section-header">
+                    <h2>The <span>OCMS Edge</span></h2>
+                    <p>Why the world's leading engineers choose our ecosystem.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h4>Low-Latency Execution</h4>
+                        <p>Our curriculum is optimized for rapid knowledge transfer and immediate field application.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🛡️</span>
+                        <h4>Secure Credentials</h4>
+                        <p>Immutable neural link verification for every certification earned on the platform.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🛰️</span>
+                        <h4>Global Nexus</h4>
+                        <p>Access your learning workspace from any node in the global network, anytime.</p>
+                    </div>
+                    <div class="feature-card" style="border-color: var(--accent);">
+                        <span class="feature-icon" style="text-shadow: 0 0 10px var(--accent);">🔥</span>
+                        <h4>Elite Instructors</h4>
+                        <p>Learn from agents with proven track records in high-stakes technology environments.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        </div>
+    </main>
+
+    <script>
+        // Auth State Management
+        const token = localStorage.getItem('access');
+        const loginLink = document.getElementById('loginLink');
+        const registerLink = document.getElementById('registerLink');
+        const logoutLink = document.getElementById('logoutLink');
+        const profileLink = document.getElementById('profileLink');
+        const dashboardLink = document.getElementById('dashboardLink');
+
+        if (token) {
+            loginLink.style.display = 'none';
+            registerLink.style.display = 'none';
+            logoutLink.style.display = 'inline';
+            profileLink.style.display = 'inline';
+            dashboardLink.style.display = 'inline';
+        }
+
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.reload();
+        });
+
+        // Fetch Live Stats for Cards
+        async function loadHomeContent() {
+            try {
+                // Fetch Stats
+                const statsRes = await fetch('http://127.0.0.1:8000/api/analytics/');
+                if (statsRes.ok) {
+                    const data = await statsRes.json();
+                    document.getElementById('totalUsers').textContent = data.summary.total_users;
+                    document.getElementById('totalCourses').textContent = data.summary.total_courses + '+';
+                    document.getElementById('totalEnrollments').textContent = data.summary.total_hours + 'h';
+                }
+
+                // Fetch Categories
+                const catRes = await fetch('http://127.0.0.1:8000/api/categories/');
+                if (catRes.ok) {
+                    const cats = await catRes.json();
+                    const catList = document.getElementById('categoryList');
+                    catList.innerHTML = cats.results.map(c => `<a href="/courses/?category=${c.id}" class="category-chip">${c.name}</a>`).join('');
+                }
+
+                // Fetch Recent Courses
+                const courseRes = await fetch('http://127.0.0.1:8000/api/courses/');
+                if (courseRes.ok) {
+                    const courses = await courseRes.json();
+                    const grid = document.getElementById('featuredCourses');
+                    grid.innerHTML = courses.results.slice(0, 3).map(c => `
+                        <a href="/course-detail/?id=${c.id}" class="preview-card">
+                            <div class="card-preview-img" style="background-image: url('${c.thumbnail_url}'); background-size: cover; background-position: center;">
+                                <span class="price-badge">$${c.price}</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>${c.title}</h3>
+                                <p>${c.description}</p>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="color: var(--primary); font-weight: 700; font-size: 0.8rem;">🚀 ENROLL NOW</span>
+                                    <span style="color: var(--text-dim); font-size: 0.8rem;">${c.level}</span>
+                                </div>
+                            </div>
+                        </a>
+                    `).join('');
+                }
+            } catch (err) { console.error('Home content load failure', err); }
+        }
+
+        loadHomeContent();
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

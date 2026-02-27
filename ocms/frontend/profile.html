@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning - OCMS.IO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #020617;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --secondary: #8b5cf6;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: radial-gradient(circle at top right, rgba(139, 92, 246, 0.05), transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Profile Header */
+        .profile-hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .user-meta {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .avatar-large {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 20px 40px -10px var(--primary-glow);
+            border: 4px solid var(--glass-border);
+        }
+
+        .user-details h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-details p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-details p::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Action Buttons */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            box-shadow: 0 10px 20px -5px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #fff;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        /* Dashboard Link Card */
+        .analytics-teaser {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid var(--primary-glow);
+            padding: 2.5rem;
+            border-radius: 32px;
+            margin-bottom: 5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .teaser-content h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .teaser-content p {
+            color: var(--text-dim);
+        }
+
+        /* Courses Grid */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-glow);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .course-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .course-stats {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-actions {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .percent-badge {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        .continue-btn {
+            background: #fff;
+            color: #000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 800;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .user-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-details h1 {
+                font-size: 2.5rem;
+            }
+
+            .analytics-teaser {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="profile-hero">
+            <div class="user-meta">
+                <div class="avatar-large" id="avatarChar">U</div>
+                <div class="user-details">
+                    <h1 id="profileName">Elite Student</h1>
+                    <p id="profileEmail">active_member@ocms.io</p>
+                    <div class="hero-actions" style="margin-top: 2rem;">
+                        <a href="/" class="btn btn-primary">Home</a>
+                        <button onclick="logout()" class="btn btn-outline">Sign Out</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="analytics-teaser">
+            <div class="teaser-content">
+                <h3>Insights & Growth</h3>
+                <p>Monitor your performance across the entire learning ecosystem.</p>
+            </div>
+            <a href="/dashboard/" class="btn btn-outline"
+                style="border-color: var(--primary); color: var(--primary);">Open Analytics Dashboard</a>
+        </section>
+
+        <div class="section-header">
+            <h2>Course Library</h2>
+            <div style="color: var(--text-dim); font-weight: 600;" id="courseCount">0 Courses Enrolled</div>
+        </div>
+
+        <div class="course-grid" id="enrolledList">
+            <!-- Courses loaded dynamically -->
+            <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-dim);">
+                Retrieving your progress...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('access');
+        if (!token) window.location.href = '/login/';
+
+        async function loadProfile() {
+            try {
+                // Load User Info
+                const userRes = await fetch('http://127.0.0.1:8000/api/users/me/', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (userRes.ok) {
+                    const user = await userRes.json();
+                    const name = user.full_name || user.username;
+                    document.getElementById('profileName').textContent = name;
+                    document.getElementById('profileEmail').textContent = user.email;
+                    document.getElementById('avatarChar').textContent = name[0].toUpperCase();
+                }
+
+                // Load Enrollments
+                const enrollRes = await fetch('http://127.0.0.1:8000/api/enrollments/my/', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (enrollRes.ok) {
+                    const enrollments = await enrollRes.json();
+                    const list = document.getElementById('enrolledList');
+                    document.getElementById('courseCount').textContent = `${enrollments.length} Courses Enrolled`;
+
+                    if (enrollments.length === 0) {
+                        list.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 4rem; background: var(--card-bg); border-radius: 32px; border: 1px solid var(--glass-border);">
+                                <h3 style="margin-bottom: 1rem;">No active courses</h3>
+                                <p style="color: var(--text-dim); margin-bottom: 2rem;">Start your journey by exploring our premium library.</p>
+                                <a href="/courses/" class="btn btn-primary" style="display: inline-flex;">Explore Courses</a>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    list.innerHTML = '';
+                    enrollments.forEach(en => {
+                        const progress = en.total_lectures > 0 ? Math.round((en.completed_lectures / en.total_lectures) * 100) : 0;
+                        const card = document.createElement('div');
+                        card.className = 'course-card';
+                        card.innerHTML = `
+                            <h3>${en.course.title}</h3>
+                            <div class="course-stats">
+                                <span>Curriculum Progress</span>
+                                <span>${en.completed_lectures}/${en.total_lectures} Lessons</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                            <div class="card-actions">
+                                <div class="percent-badge">${progress}%</div>
+                                <a href="/course-detail/?id=${en.course.id}" class="continue-btn">Continue Journey</a>
+                            </div>
+                        `;
+                        list.appendChild(card);
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = '/';
+        }
+
+        loadProfile();
+    </script>
+</body>
+
+</html>
